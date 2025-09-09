@@ -1,0 +1,1 @@
+You can place one off notes here. The init script does not run any command.
