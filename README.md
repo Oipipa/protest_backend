@@ -1,7 +1,6 @@
 # Protest backend skeleton
 
-This is a pure skeleton for a realtime backend using FastAPI, Redis, Celery, and Postgres.  
-Files are placeholders. You will fill code later.
+This is the backend to the incident reporting app built for the September 2025 protests in Nepal 
 
 Quick start after you add code
 1. copy .env.example to .env and edit values
