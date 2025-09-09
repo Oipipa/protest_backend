@@ -1,0 +1,49 @@
+services:
+  - type: web
+    name: protest-backend-api
+    env: docker
+    dockerfilePath: api/Dockerfile.prod
+    autoDeploy: true
+    healthCheckPath: /healthz
+    envVarGroups:
+      - protest-env
+    disk:
+      name: uploads
+      mountPath: /app/uploads
+      sizeGB: 5
+
+  - type: worker
+    name: protest-backend-worker
+    env: docker
+    dockerfilePath: api/Dockerfile.prod
+    autoDeploy: true
+    envVarGroups:
+      - protest-env
+    startCommand: >
+      celery -A app.services.celery_app worker
+      --loglevel INFO --pool solo --concurrency 1 --max-tasks-per-child 100
+
+  - type: worker
+    name: protest-backend-beat
+    env: docker
+    dockerfilePath: api/Dockerfile.prod
+    autoDeploy: true
+    envVarGroups:
+      - protest-env
+    startCommand: >
+      celery -A app.services.celery_app beat
+      --loglevel INFO
+
+envVarGroups:
+  - name: protest-env
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql+psycopg://neondb_owner:npg_zvbj0umdnTs5@ep-twilight-firefly-a78gqtw7-pooler.ap-southeast-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+      - key: REDIS_URL
+        value: "rediss://default:11996c8513e343609faf026e4114491d@fly-protest-redis-nepal-anubhav.upstash.io:6379/0"
+      - key: UPLOAD_DIR
+        value: "/app/uploads"
+      - key: CORS_ORIGINS
+        value: '["*"]'
+      - key: SENTRY_DSN
+        value: ""

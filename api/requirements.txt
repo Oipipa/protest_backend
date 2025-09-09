@@ -1,20 +1,14 @@
-# Core API
 fastapi>=0.115
 uvicorn[standard]>=0.30
-
-# Data and storage
 sqlalchemy>=2.0
 alembic>=1.13
 psycopg[binary]>=3.2
-
-# Background jobs and realtime plumbing
 celery>=5.4
 redis>=5.0
 tenacity>=8.4
 httpx>=0.27
-
-# Settings and utils
 pydantic>=2.8
 pydantic-settings>=2.5
 python-dotenv>=1.0
 loguru>=0.7
+python-multipart>=0.0.9
