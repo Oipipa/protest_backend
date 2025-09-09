@@ -5,8 +5,8 @@ services:
     dockerfilePath: api/Dockerfile.prod
     autoDeploy: true
     healthCheckPath: /healthz
-    envVarGroups:
-      - protest-env
+    envVars:
+      - fromGroup: protest-env
     disk:
       name: uploads
       mountPath: /app/uploads
@@ -17,8 +17,8 @@ services:
     env: docker
     dockerfilePath: api/Dockerfile.prod
     autoDeploy: true
-    envVarGroups:
-      - protest-env
+    envVars:
+      - fromGroup: protest-env
     startCommand: >
       celery -A app.services.celery_app worker
       --loglevel INFO --pool solo --concurrency 1 --max-tasks-per-child 100
@@ -28,8 +28,8 @@ services:
     env: docker
     dockerfilePath: api/Dockerfile.prod
     autoDeploy: true
-    envVarGroups:
-      - protest-env
+    envVars:
+      - fromGroup: protest-env
     startCommand: >
       celery -A app.services.celery_app beat
       --loglevel INFO
