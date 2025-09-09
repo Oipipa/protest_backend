@@ -19,9 +19,7 @@ services:
     autoDeploy: true
     envVars:
       - fromGroup: protest-env
-    startCommand: >
-      celery -A app.services.celery_app worker
-      --loglevel INFO --pool solo --concurrency 1 --max-tasks-per-child 100
+    dockerCommand: ["bash","-lc","celery -A app.services.celery_app worker --loglevel INFO --pool solo --concurrency 1 --max-tasks-per-child 100"]
 
   - type: worker
     name: protest-backend-beat
@@ -30,9 +28,7 @@ services:
     autoDeploy: true
     envVars:
       - fromGroup: protest-env
-    startCommand: >
-      celery -A app.services.celery_app beat
-      --loglevel INFO
+    dockerCommand: ["bash","-lc","celery -A app.services.celery_app beat --loglevel INFO"]
 
 envVarGroups:
   - name: protest-env
